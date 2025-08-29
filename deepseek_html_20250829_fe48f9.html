@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مێنیوی ئایس کریم - Modern Ice Cream Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'NRT';
+            src: url('https://cdn.rawgit.com/AbdullahDabbaa/Kurdish-Fonts/7a7002c3/NRT-Reg.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'NRT', 'Tajawal', sans-serif;
+        }
+        
+        :root {
+            --primary: #FF6B8B;
+            --secondary: #6DC0EA;
+            --accent: #FFD166;
+            --light: #FCF5F3;
+            --dark: #2D3047;
+            --success: #06D6A0;
+            --menu-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text-dark: #2D3047;
+            --text-light: #6C757D;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #F8F5F2 0%, #FEF9F7 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding-bottom: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-left: 10px;
+        }
+        
+        .title {
+            text-align: center;
+            padding: 40px 0 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .title h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 0px rgba(255, 107, 139, 0.1);
+        }
+        
+        .title p {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .title:hover {
+            transform: scale(1.02);
+        }
+        
+        .title-tap-effect {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(109, 192, 234, 0.2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 0.5s ease-out;
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .ice-cream-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .ice-cream-card:hover {
+            transform: translateY(-12px) rotate(1deg);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card-image:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(0,0,0,0.1) 0%, transparent 100%);
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        
+        .ice-cream-card:hover .card-image img {
+            transform: scale(1.15);
+        }
+        
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .card-content p {
+            color: var(--text-light);
+            opacity: 0.9;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+        
+        .price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .price:before {
+            content: '';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            margin-left: 8px;
+            font-size: 1.3rem;
+        }
+        
+        /* Admin Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .admin-modal {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            transform: translateY(50px) scale(0.9);
+            transition: transform 0.5s ease;
+        }
+        
+        .modal-overlay.active .admin-modal {
+            transform: translateY(0) scale(1);
+        }
+        
+        .admin-modal h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .input-group input:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(109, 192, 234, 0.2);
+        }
+        
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn i {
+            margin-left: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #ff5377;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #e9ecef;
+            color: var(--text-dark);
+        }
+        
+        .btn-secondary:hover {
+            background: #dee2e6;
+            transform: translateY(-2px);
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            gap: 15px;
+        }
+        
+        /* Dashboard */
+        .dashboard {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .dashboard h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+            font-size: 2.2rem;
+        }
+        
+        .dashboard-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+        
+        .dashboard-items {
+            margin-top: 40px;
+        }
+        
+        .dashboard-items h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .item-list {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .item-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 100px 120px;
+            gap: 20px;
+            align-items: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .item-row:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .item-price {
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        /* Image Upload Styles */
+        .image-upload-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .image-preview p {
+            color: var(--text-light);
+        }
+        
+        .upload-btn {
+            background: var(--secondary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-btn:hover {
+            background: #5aa8d6;
+        }
+        
+        .upload-btn i {
+            margin-left: 8px;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 900px) {
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .title h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .item-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .dashboard-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .title h1 {
+                font-size: 2rem;
+            }
+            
+            .title p {
+                font-size: 1.1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .dashboard {
+                padding: 25px;
+            }
+            
+            .admin-modal {
+                padding: 25px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 18px 25px;
+            background: var(--success);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateX(100%);
+            transition: transform 0.4s ease;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .notification i {
+            margin-left: 10px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(255, 107, 139, 0.5);
+            cursor: pointer;
+            z-index: 99;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-btn:hover {
+            transform: translateY(-5px) rotate(10deg);
+            box-shadow: 0 12px 30px rgba(255, 107, 139, 0.6);
+        }
+        
+        .admin-only {
+            display: none;
+        }
+        
+        .optional-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-ice-cream"></i>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="title" id="menuTitle">
+            <h1>ساردەمەنی ڕامان</h1>
+        </div>
+        
+        <div class="menu-grid" id="iceCreamMenu">
+            <!-- سيتم ملئ هذه القائمة بواسطة JavaScript -->
+        </div>
+        
+        <div class="dashboard" id="adminDashboard">
+            <h2>داشبۆڕی ڕێکخستن</h2>
+            <div class="dashboard-controls">
+                <div class="input-group">
+                    <label for="menuTitleInput">گۆڕینی ناونیشانی مێنو</label>
+                    <input type="text" id="menuTitleInput" value="مێنیوی ئایس کریم">
+                </div>
+                <button class="btn btn-primary" onclick="updateMenuTitle()">
+                    <i class="fas fa-sync-alt"></i> نوێکردنەوەی ناونیشان
+                </button>
+            </div>
+            
+            <h3>زیادکردنی ئایتمی نوێ</h3>
+            <div class="dashboard-controls">
+                <div class="input-group">
+                    <label for="newItemName">ناوی ئایس کریم</label>
+                    <input type="text" id="newItemName" placeholder="ناوی ئایس کریم بنووسە">
+                </div>
+                <div class="input-group">
+                    <label for="newItemPrice">نرخ (دینار) <span class="optional-label">- ئیختیاری</span></label>
+                    <input type="number" id="newItemPrice" placeholder="نرخ">
+                </div>
+            </div>
+            <div class="dashboard-controls">
+                <div class="image-upload-container">
+                    <label>وێنەی ئایس کریم</label>
+                    <div class="image-preview" id="imagePreview">
+                        <p>هیچ وێنیەیەک هەڵنەکراوە</p>
+                    </div>
+                    <input type="file" id="newItemImage" accept="image/*" style="display: none;">
+                    <div class="upload-btn" onclick="document.getElementById('newItemImage').click()">
+                        <i class="fas fa-upload"></i> هەڵبژاردنی وێنە
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addNewItem()">
+                    <i class="fas fa-plus"></i> زیادکردنی ئایتم
+                </button>
+            </div>
+            
+            <div class="dashboard-items">
+                <h3>ئایتمەکانی ئێستا</h3>
+                <div class="item-list" id="itemsList">
+                    <!-- سيتم ملئ هذه القائمة بواسطة JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div class="modal-overlay" id="pinModal">
+        <div class="admin-modal">
+            <h2>چوونە ناو داشبۆردی ڕێکخستن</h2>
+            <div class="input-group">
+                <label for="pinInput">پین بنووسە</label>
+                <input type="password" id="pinInput" placeholder="پینەکە بنووسە">
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="closePinModal()">
+                    <i class="fas fa-times"></i> پاشگەزبوونەوە
+                </button>
+                <button class="btn btn-primary" onclick="checkPin()">
+                    <i class="fas fa-lock-open"></i> چوونە ناو
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span>نوێکردنەوەکە سەرکەوتووبوو!</span>
+    </div>
+
+    <div class="floating-btn" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // بيانات المثلجات الأولية
+        let iceCreams = [
+            { id: 1, name: "ئایس کریمی شوکلات", price: "15", image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80" },
+            { id: 2, name: "ئایس کریمی شیلە", price: "14", image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=864&q=80" },
+            { id: 3, name: "ئایس کریمی ڤانیلا", price: "", image: "https://images.unsplash.com/photo-1464454709131-ffd692591ee5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" },
+            { id: 4, name: "ئایس کریمی مانگۆ", price: "16", image: "https://images.unsplash.com/photo-1568309032740-9132a6d1f4ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" },
+            { id: 5, name: "ئایس کریمی کارامێل", price: "", image: "https://images.unsplash.com/photo-15321620286-8e14ed1f5b15?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" },
+            { id: 6, name: "ئایس کریمی فستقی", price: "18", image: "https://images.unsplash.com/photo-1510093753730-2e6e97ed2ee6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" }
+        ];
+        
+        // عناصر DOM
+        const iceCreamMenu = document.getElementById('iceCreamMenu');
+        const menuTitle = document.getElementById('menuTitle');
+        const pinModal = document.getElementById('pinModal');
+        const adminDashboard = document.getElementById('adminDashboard');
+        const itemsList = document.getElementById('itemsList');
+        const menuTitleInput = document.getElementById('menuTitleInput');
+        const notification = document.getElementById('notification');
+        const imagePreview = document.getElementById('imagePreview');
+        const imageInput = document.getElementById('newItemImage');
+        let uploadedImage = null;
+        
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            renderIceCreamMenu();
+            setupTitleTapListener();
+            setupImageUpload();
+        });
+        
+        // إعداد تحميل الصورة
+        function setupImageUpload() {
+            imageInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        uploadedImage = e.target.result;
+                        imagePreview.innerHTML = `<img src="${uploadedImage}" alt="Image Preview">`;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        // عرض قائمة المثلجات
+        function renderIceCreamMenu() {
+            iceCreamMenu.innerHTML = '';
+            iceCreams.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'ice-cream-card';
+                
+                // Only show price if it exists
+                const priceHtml = item.price ? `<div class="price">${item.price} دینار</div>` : '';
+                
+                card.innerHTML = `
+                    <div class="card-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="card-content">
+                        <h3>${item.name}</h3>
+                        ${priceHtml}
+                    </div>
+                `;
+                iceCreamMenu.appendChild(card);
+            });
+        }
+        
+        // إعداد استماع النقر على العنوان
+        function setupTitleTapListener() {
+            let tapCount = 0;
+            let tapTimeout;
+            
+            menuTitle.addEventListener('click', function() {
+                // إنشاء تأثير النقر
+                const effect = document.createElement('div');
+                effect.className = 'title-tap-effect';
+                menuTitle.appendChild(effect);
+                
+                // إزالة التأثير بعد انتهاء الرسوم المتحركة
+                setTimeout(() => {
+                    effect.remove();
+                }, 500);
+                
+                clearTimeout(tapTimeout);
+                tapCount++;
+                
+                if (tapCount === 3) {
+                    openPinModal();
+                    tapCount = 0;
+                }
+                
+                tapTimeout = setTimeout(() => {
+                    tapCount = 0;
+                }, 500);
+            });
+        }
+        
+        // فتح نموذج إدخال PIN
+        function openPinModal() {
+            pinModal.classList.add('active');
+            document.getElementById('pinInput').focus();
+        }
+        
+        // إغلاق نموذج إدخال PIN
+        function closePinModal() {
+            pinModal.classList.remove('active');
+            document.getElementById('pinInput').value = '';
+        }
+        
+        // التحقق من PIN
+        function checkPin() {
+            const pinInput = document.getElementById('pinInput').value;
+            
+            if (pinInput === '1111') {
+                closePinModal();
+                adminDashboard.style.display = 'block';
+                renderItemsList();
+                showNotification('بە سەرکەوتوویی چوویتە ناو داشبۆڕی ڕێکخستن');
+            } else {
+                showNotification('پینەکە هەڵەیە', 'error');
+            }
+        }
+        
+        // عرض قائمة العناصر في لوحة التحكم
+        function renderItemsList() {
+            itemsList.innerHTML = '';
+            iceCreams.forEach(item => {
+                const priceText = item.price ? `${item.price} دینار` : 'نرخی نیە';
+                
+                const itemRow = document.createElement('div');
+                itemRow.className = 'item-row';
+                itemRow.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-price">${priceText}</div>
+                    <div class="item-actions">
+                        <button class="btn btn-secondary" onclick="deleteItem(${item.id})">
+                            <i class="fas fa-trash"></i> سڕینەوە
+                        </button>
+                    </div>
+                `;
+                itemsList.appendChild(itemRow);
+            });
+        }
+        
+        // تحديث عنوان القائمة
+        function updateMenuTitle() {
+            const newTitle = menuTitleInput.value;
+            document.querySelector('.title h1').textContent = newTitle;
+            showNotification('ناونیشانەکە نوێ کرایەوە');
+        }
+        
+        // إضافة عنصر جديد
+        function addNewItem() {
+            const nameInput = document.getElementById('newItemName');
+            const priceInput = document.getElementById('newItemPrice');
+            
+            if (!nameInput.value) {
+                showNotification('تکایە ناوەکە بنووسە', 'error');
+                return;
+            }
+            
+            const newItem = {
+                id: iceCreams.length + 1,
+                name: nameInput.value,
+                price: priceInput.value || '', // Price is optional
+                image: uploadedImage || 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=864&q=80'
+            };
+            
+            iceCreams.push(newItem);
+            renderIceCreamMenu();
+            renderItemsList();
+            
+            nameInput.value = '';
+            priceInput.value = '';
+            imageInput.value = '';
+            uploadedImage = null;
+            imagePreview.innerHTML = '<p>هیچ وێنیەیەک هەڵنەکراوە</p>';
+            
+            showNotification('ئایتمەکە بە سەرکەوتوویی زیادکرا');
+        }
+        
+        // حذف عنصر
+        function deleteItem(id) {
+            if (confirm('ئایا دڵنیای لە سڕینەوەی ئەم ئایتمە؟')) {
+                iceCreams = iceCreams.filter(item => item.id !== id);
+                renderIceCreamMenu();
+                renderItemsList();
+                showNotification('ئایتمەکە بە سەرکەوتوویی سڕدرایەوە');
+            }
+        }
+        
+        // عرض الإشعار
+        function showNotification(message, type = 'success') {
+            notification.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i><span>${message}</span>`;
+            notification.style.background = type === 'success' ? 'var(--success)' : 'var(--primary)';
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // التمرير إلى الأعلى
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
